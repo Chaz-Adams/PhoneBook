@@ -14,11 +14,11 @@ public class PhoneBook {
     private final Map<String, List<String>> phonebook;
 
     public PhoneBook(Map<String, List<String>> map) {
-        this.phonebook = new HashMap<>();
+        this.phonebook = new HashMap<>(map);
     }
 
     public PhoneBook() {
-        this(null);
+        this.phonebook = new HashMap<>();
     }
 
     public void add(String name, String phoneNumber) {
@@ -33,25 +33,33 @@ public class PhoneBook {
         this.phonebook.remove(name);
     }
 
-    public Boolean hasEntry(String name) {
-        return this.phonebook.containsKey(name);
+    public Boolean hasEntry(String name, String phoneNumber) {
+        if (phonebook.containsKey(name)) {
+            List<String> phoneNumbers = phonebook.get(name);
+            return phoneNumbers.contains(phoneNumber);
+        }
+        return false;
     }
 
     public List<String> lookup(String name) {
-        //return this.phonebook.values();
-        return null;
+        return this.phonebook.getOrDefault(name , Collections.emptyList());
     }
 
     public String reverseLookup(String phoneNumber)  {
+        for (Map.Entry<String, List<String>> entry : phonebook.entrySet()) {
+            if (entry.getValue().contains(phoneNumber)) {
+                return entry.getKey();
+            }
+        }
         return null;
     }
 
     public List<String> getAllContactNames() {
-        //return this.phonebook.keySet();
-        return null;
+        return new ArrayList<>(this.phonebook.keySet());
+
     }
 
     public Map<String, List<String>> getMap() {
-        return null;
+        return this.phonebook;
     }
 }
