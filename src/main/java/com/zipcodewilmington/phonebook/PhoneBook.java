@@ -14,11 +14,12 @@ public class PhoneBook {
     private final Map<String, List<String>> phonebook;
 
     public PhoneBook(Map<String, List<String>> map) {
-        this.phonebook = new HashMap<>(map);
+        this.phonebook = new LinkedHashMap<>(map);
+        // convert to linkList according to Nick
     }
 
     public PhoneBook() {
-        this.phonebook = new HashMap<>();
+        this.phonebook = new LinkedHashMap<>();
     }
 
     public void add(String name, String phoneNumber) {
@@ -56,7 +57,6 @@ public class PhoneBook {
 
     public List<String> getAllContactNames() {
         return new ArrayList<>(this.phonebook.keySet());
-
     }
 
     public Map<String, List<String>> getMap() {
